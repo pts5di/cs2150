@@ -26,4 +26,7 @@ int main() {
     }
     else {
       myStack.push(stoi(myString));
+    }
+  }
+}
       
