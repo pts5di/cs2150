@@ -2,6 +2,7 @@
 #include <string>
 #include <stack>
 
+using namespace std;
 int poptop(stack<int>* numStack) {
   int myInt;
   if (!numStack->empty()) {
@@ -16,14 +17,14 @@ int main() {
   stack<int> myStack;
   int myInt1, myInt2;
     
-  while(cin << myString) {
-    if(func == "+") {
+  while(cin >> myString) {
+    if(myString == "+") {
       myInt1 = poptop(&myStack);
       myInt2 = poptop(&myStack);
 
       myStack.push(myInt1 + myInt2);
     }
-    else if(func == "-") {
+    else if(myString == "-") {
       myInt1 = poptop(&myStack);
       myInt2 = poptop(&myStack);
 
