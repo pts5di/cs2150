@@ -2,7 +2,7 @@
 #include <string>
 #include <stack>
 
-int poptop(stack<int> numStack) {
+int poptop(stack<int>& numStack) {
   int myInt;
   if (!numStack.empty()) {
     myInt = numStack.top();
