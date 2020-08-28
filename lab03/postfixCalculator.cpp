@@ -33,5 +33,7 @@ int main() {
       myStack.push(stoi(myString));
     }
   }
+
+  return 0;
 }
       
