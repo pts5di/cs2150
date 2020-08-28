@@ -2,11 +2,11 @@
 #include <string>
 #include <stack>
 
-int poptop(stack<int>& numStack) {
+int poptop(stack<int>* numStack) {
   int myInt;
-  if (!numStack.empty()) {
-    myInt = numStack.top();
-    numStack.pop();
+  if (!numStack->empty()) {
+    myInt = numStack->top();
+    numStack->pop();
   }
 
   return myInt;
@@ -18,14 +18,14 @@ int main() {
     
   while(cin << myString) {
     if(func == "+") {
-      myInt1 = poptop(myStack);
-      myInt2 = poptop(myStack);
+      myInt1 = poptop(&myStack);
+      myInt2 = poptop(&myStack);
 
       myStack.push(myInt1 + myInt2);
     }
     else if(func == "-") {
-      myInt1 = poptop(myStack);
-      myInt2 = poptop(myStack);
+      myInt1 = poptop(&myStack);
+      myInt2 = poptop(&myStack);
 
       myStack.push(myInt1 - myInt2);
     }
