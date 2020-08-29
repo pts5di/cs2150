@@ -1,4 +1,4 @@
-#ifndefined STACK_H
+#ifndef STACK_H
 #define STACK_H
 
 class StackNode{
@@ -10,6 +10,8 @@ class StackNode{
   
   int value;
   StackNode* next;
+  friend class Stack;
+  
 };
 
 class Stack {
@@ -28,9 +30,11 @@ class Stack {
 
   bool empty();
 
+  int size();
+
  private:
   
-  StackNode* top;
+  StackNode* first;
   int count;
-}
+};
 #endif
