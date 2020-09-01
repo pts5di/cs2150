@@ -1,5 +1,0 @@
-#include <iostream>
-
-class StackNode {
-  StackNode::StackNode:(int)
-  
