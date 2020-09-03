@@ -18,6 +18,11 @@ BinarySearchTree::~BinarySearchTree() {
 void BinarySearchTree::insert(const string& x) {
     // YOUR IMPLEMENTATION GOES HERE
   BinaryNode* node = root;
+  if(root == NULL) {
+    root = new BinaryNode;
+    root->value = x;
+    return;
+  }
   while(true) {
     if(x.compare(node->value) > 0) {
       if(node->right != NULL) {
@@ -109,20 +114,21 @@ string BinarySearchTree::pathTo(const string& x) const {
       pathStack.push(node->value);
       node = node->right;
       if(node == NULL) {
-	return NULL;
+	return result;
       }
     }else if(x.compare(node->value) < 0) {
       pathStack.push(node->value);
       node = node->left;
       if (node == NULL) {
-	return NULL;
+	return result;
       }
     }
   }
   while(!(pathStack.empty())) {
-    result = pathStack.top() + result;
+    result = pathStack.top() + " " + result;
     pathStack.pop();
   }
+  result = "\n" + result;
   return result;
 }
 
