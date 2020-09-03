@@ -16,6 +16,25 @@ BinarySearchTree::~BinarySearchTree() {
 // insert finds a position for x in the tree and places it there.
 void BinarySearchTree::insert(const string& x) {
     // YOUR IMPLEMENTATION GOES HERE
+  BinaryNode* node = root;
+  while(true) {
+    if(x.compare(node->value) > 0) {
+      if(node->right != NULL) {
+	node = node->right;
+      }else{
+	node->right = new BinaryNode* temp;
+	temp->value = x;
+      }
+    }
+    if(x.compare(node->value) < 0) {
+      if(node->left != NULL) {
+	node = node->left;
+      }else{
+	node->left = new BinaryNode* temp;
+	temp->value = x;
+      }
+    }
+  }
 }
 
 // remove finds x's position in the tree and removes it.
