@@ -12,6 +12,10 @@ TreeCalc::TreeCalc() {
 
 // Destructor - frees memory
 TreeCalc::~TreeCalc() {
+  while(!(expressionStack.empty())) {
+    destroy(expressionStack.top());
+    expressionStack.pop();
+  }
 }
 
 // Deletes tree/frees memory
@@ -39,21 +43,56 @@ void TreeCalc::readInput() {
 // Puts value in tree stack
 void TreeCalc::insert(const string& val) {
     // insert a value into the tree
+  if(isdigit(val[0]) || (val.length() > 1 && val[0] == '-' )) {
+    expressionStack.push(new TreeNode(val));
+  }
+  else{
+    TreeNode* node = new TreeNode(val);
+    node->right = expressionStack.top();
+    expressionStack.pop();
+    node->left = expressionStack.top();
+    expressionStack.pop();
+    expressionStack.push(node);
+  }
 }
 
 // Prints data in prefix form
 void TreeCalc::printPrefix(TreeNode* tree) const {
     // print the tree in prefix format
+  cout << tree->value << " ";
+
+  if(tree->left->value != NULL) {
+    printPrefix(left);
+  }
+  if(tree->right->value != NULL) {
+    printPrefix(right);
+  }
 }
 
 // Prints data in infix form
 void TreeCalc::printInfix(TreeNode* tree) const {
     // print tree in infix format with appropriate parentheses
+  if(tree->left-value != NULL) {
+    printPrefix(left);
+  }
+
+  cout << tree->value << " ";
+
+  if(tree->right->value != NULL) {
+    printPrefix(right);
+  }
 }
 
 //Prints data in postfix form
 void TreeCalc::printPostfix(TreeNode* tree) const {
     // print the tree in postfix form
+  if(tree->left->value != NULL) {
+    printPrefix(left);
+  }
+  if(tree->right->value != NULL) {
+    printPrefix(right);
+  }
+  cout << tree->value << " ";
 }
 
 // Prints tree in all 3 (post, in, pre) forms
@@ -81,12 +120,42 @@ void TreeCalc::printOutput() const {
 // private calculate() method
 int TreeCalc::calculate(TreeNode* tree) const {
     // Traverse the tree and calculates the result
+  if(expressionStack.size != 1) {
+    cerr << "Invalid input!";
+  }else if (tree->value == NULL) {
     return 0;
+  }else if(tree->left == NULL && tree->right == NULL) {
+    return stoi(tree->value);
+  }else if(tree->value == "+") {
+    return calculate(tree->left) + calculate(tree->right);
+  }else if(tree->value == "-") {
+    return calculate(tree->left) - calculate(tree->right);
+  }else if(tree->value == "*") {
+    return calculate(tree->left) * calculate(tree->right);
+  }else {
+    return calculate(tree->left) / calculate(tree->right);
+  }
 }
 
 //Calls calculate, sets the stack back to a blank stack
 // public calculate() method. Hides private data from user
 int TreeCalc::calculate() {
     // call private calculate method here
-    return 0;
+  int result = calculate(expressionStack->top());
+  
+  while(!(expressionStack->empty())) {
+    destroy(expressionStack->top());
+    expressionStack->pop();
+  }
+  return result;
+}
+
+void TreeCalc::destroy(TreeNode* tree) {
+  if(tree->left != NULL) {
+    destroy(tree->left);
+  }
+  if(tree->right != NULL) {
+    destroy(tree->right);
+  }
+  delete tree;
 }
