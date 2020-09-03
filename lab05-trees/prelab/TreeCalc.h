@@ -20,6 +20,7 @@ public:
     void cleanTree(TreeNode* tree);  // Deletes tree/frees memory
     void readInput();               // Gets data from user
     void insert(const string& val); // Puts value in tree
+  void destroy(TreeNode* tree);
 
     // print methods
     void printPrefix(TreeNode* tree) const;  // Prints data in prefix form
