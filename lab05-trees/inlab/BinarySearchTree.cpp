@@ -24,14 +24,16 @@ void BinarySearchTree::insert(const string& x) {
       }else{
 	node->right = new BinaryNode* temp;
 	temp->value = x;
+	break;
       }
     }
-    if(x.compare(node->value) < 0) {
+    else if(x.compare(node->value) < 0) {
       if(node->left != NULL) {
 	node = node->left;
       }else{
 	node->left = new BinaryNode* temp;
 	temp->value = x;
+	break;
       }
     }
   }
