@@ -2,6 +2,7 @@
 #include "BinarySearchTree.h"
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
 
 BinarySearchTree::BinarySearchTree() {
@@ -98,7 +99,7 @@ BinaryNode* BinarySearchTree::remove(BinaryNode*& n, const string& x) {
 string BinarySearchTree::pathTo(const string& x) const {
     // YOUR IMPLEMENTATION GOES HERE
   BinaryNode* node = root;
-  stack<BinaryNode*> pathStack;
+  stack<string> pathStack;
   string result = "";
   while(node != NULL) {
     if(x.compare(node->value) == 0) {
@@ -127,6 +128,7 @@ string BinarySearchTree::pathTo(const string& x) const {
 
 
 
+
 // find determines whether or not x exists in the tree.
 bool BinarySearchTree::find(const string& x) const {
     // YOUR IMPLEMENTATION GOES HERE
@@ -138,19 +140,20 @@ bool BinarySearchTree::find(const string& x) const {
       node = node->right;
     }else{
       node = node->left;
+    }
   }
   return false;
 }
-
+  
 // numNodes returns the total number of nodes in the tree.
 int BinarySearchTree::numNodes() const {
     // YOUR IMPLEMENTATION GOES HERE
   stack<BinaryNode*> numStack;
   numStack.push(root);
   int count = 0;
-  while(!(numStack.empty()) {
-      binaryNode* node = numStack.top();
-      stack.pop();
+  while(!(numStack.empty())) {
+      BinaryNode* node = numStack.top();
+      numStack.pop();
       if(node->left != NULL) {
 	numStack.push(node->left);
       }
@@ -159,8 +162,8 @@ int BinarySearchTree::numNodes() const {
       }
       // actual behavior goes here
       count++;
-      
   }
+  return count;
 }
 
 
