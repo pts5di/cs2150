@@ -2,6 +2,7 @@
 #include "AVLTree.h"
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
 
 AVLTree::AVLTree() {
@@ -50,8 +51,9 @@ void AVLTree::insert(const string& x) {
   }
   while(!(track.empty())) {
     AVLNode* hnode = track.top();
-    hnode->height++;
+    hnode->height = 1 + max(height(hnode->left), height(hnode->right));
     balance(hnode);
+    track.pop();
   }
 }
 
@@ -135,36 +137,57 @@ int AVLTree::numNodes() const {
 // property, namely that the balance factor of n is either -1, 0, or 1.
 void AVLTree::balance(AVLNode*& n) {
     // YOUR IMPLEMENTATION GOES HERE
+  int balance = (height(n->right) - height(n->left));
+  if(balance > 1) {
+    if (n->right->left->height > n->right->right->height) {
+      rotateRight(n->right);
+    }
+    rotateLeft(n);
+  }else if(balance < -1) {
+    if(n->left->right->height > n->left->left->height) {
+      rotateLeft(n->left);
+    }
+    rotateRight(n);
+  }
 }
 
 // rotateLeft performs a single rotation on node n with its right child.
 AVLNode* AVLTree::rotateLeft(AVLNode*& n) {
     // YOUR IMPLEMENTATION GOES HERE
   string swap = n->value;
+  int swapHeight = n->height;
   AVLNode* swap2 = n->right->right;
-  n->value = n->left->value;
-  n->left->value = swap;
+  n->value = n->right->value;
+  n->height = n->right->height;
+  n->right->value = swap;
+  n->right->height = swapHeight;
+  
   
   n->right->right = n->right->left;
   n->right->left = n->left;
   
   n->left = n->right;
-  n-right = swap2;
+  n->right = swap2;
+  return n;
 }
 
 // rotateRight performs a single rotation on node n with its left child.
 AVLNode* AVLTree::rotateRight(AVLNode*& n) {
     // YOUR IMPLEMENTATION GOES HERE
   string swap = n->value;
+  int swapHeight = n->height;
   AVLNode* swap2 = n->left->left;
   n->value = n->left->value;
+  n->height = n->left->height;
   n->left->value = swap;
+  n->left->height = swapHeight;
   
   n->left->left = n->left->right;
   n->left->right = n->right;
   
   n->right = n->left;
   n->left = swap2;
+  return n;
 }
 
 // private helper for remove to allow recursion over different nodes.
