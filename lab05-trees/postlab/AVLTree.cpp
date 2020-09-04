@@ -17,6 +17,42 @@ AVLTree::~AVLTree() {
 // as necessary.
 void AVLTree::insert(const string& x) {
     // YOUR IMPLEMENTATION GOES HERE
+  stack<AVLNode*> track;
+  AVLNode* node = root;
+  if(root == NULL) {
+    root = new AVLNode;
+    root->value = x;
+    return;
+  }
+  while(true) {
+    if(x.compare(node->value) > 0) {
+      if(node->right != NULL) {
+	track.push(node);
+	node = node->right;
+      }else{
+	AVLNode* temp = new AVLNode();
+	node->right = temp;
+	temp->value = x;
+	break;
+      }
+    }
+    else if(x.compare(node->value) < 0) {
+      if(node->left != NULL) {
+	track.push(node);
+	node = node->left;
+      }else{
+	AVLNode* temp = new AVLNode();
+	node->left = temp;
+	temp->value = x;
+	break;
+      }
+    }
+  }
+  while(!(track.empty())) {
+    AVLNode* hnode = track.top();
+    hnode->height++;
+    balance(hnode);
+  }
 }
 
 // remove finds x's position in the tree and removes it, rebalancing as
@@ -29,16 +65,70 @@ void AVLTree::remove(const string& x) {
 // took to get there.
 string AVLTree::pathTo(const string& x) const {
     // YOUR IMPLEMENTATION GOES HERE
+  AVLNode* node = root;
+  stack<string> pathStack;
+  string result = "";
+  while(node != NULL) {
+    if(x.compare(node->value) == 0) {
+      pathStack.push(node->value);
+      node = NULL;
+    }else if(x.compare(node->value) > 0) {
+      pathStack.push(node->value);
+      node = node->right;
+      if(node == NULL) {
+	return result;
+      }
+    }else if(x.compare(node->value) < 0) {
+      pathStack.push(node->value);
+      node = node->left;
+      if (node == NULL) {
+	return result;
+      }
+    }
+  }
+  while(!(pathStack.empty())) {
+    result = pathStack.top() + " " + result;
+    pathStack.pop();
+  }
+  result = "\n" + result;
+  return result;
 }
 
 // find determines whether or not x exists in the tree.
 bool AVLTree::find(const string& x) const {
     // YOUR IMPLEMENTATION GOES HERE
+  AVLNode* node = root;
+  while(node != NULL) {
+    if(x == node->value) {
+      return true;
+    }else if(x.compare(node->value) > 0) {
+      node = node->right;
+    }else{
+      node = node->left;
+    }
+  }
+  return false;
 }
 
 // numNodes returns the total number of nodes in the tree.
 int AVLTree::numNodes() const {
     // YOUR IMPLEMENTATION GOES HERE
+  stack<AVLNode*> numStack;
+  numStack.push(root);
+  int count = 0;
+  while(!(numStack.empty())) {
+      AVLNode* node = numStack.top();
+      numStack.pop();
+      if(node->left != NULL) {
+	numStack.push(node->left);
+      }
+      if(node->right != NULL) {
+	numStack.push(node->right);
+      }
+      // actual behavior goes here
+      count++;
+  }
+  return count;
 }
 
 // balance makes sure that the subtree with root n maintains the AVL tree
@@ -50,11 +140,31 @@ void AVLTree::balance(AVLNode*& n) {
 // rotateLeft performs a single rotation on node n with its right child.
 AVLNode* AVLTree::rotateLeft(AVLNode*& n) {
     // YOUR IMPLEMENTATION GOES HERE
+  string swap = n->value;
+  AVLNode* swap2 = n->right->right;
+  n->value = n->left->value;
+  n->left->value = swap;
+  
+  n->right->right = n->right->left;
+  n->right->left = n->left;
+  
+  n->left = n->right;
+  n-right = swap2;
 }
 
 // rotateRight performs a single rotation on node n with its left child.
 AVLNode* AVLTree::rotateRight(AVLNode*& n) {
     // YOUR IMPLEMENTATION GOES HERE
+  string swap = n->value;
+  AVLNode* swap2 = n->left->left;
+  n->value = n->left->value;
+  n->left->value = swap;
+  
+  n->left->left = n->left->right;
+  n->left->right = n->right;
+  
+  n->right = n->left;
+  n->left = swap2;
 }
 
 // private helper for remove to allow recursion over different nodes.
