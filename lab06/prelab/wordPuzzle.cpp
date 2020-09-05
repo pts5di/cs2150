@@ -19,19 +19,71 @@ int main(int argc, char *argv[]) {
   string line;
   int rows;
   int cols;
+  int maxLength;
   unordered_set<string> dictSet;
   if(argc == 3) {
-    fstream dictfile(argv[1]);
-    if(dictfile.is_open()) {
-      while(getline(dictfile, line)) {
+    fstream dictFile(argv[1]);
+    if(dictFile.is_open()) {
+      while(getline(dictFile, line)) {
 	dictSet.insert(line);
       }
     }
-    dictfile.close();
+    dictFile.close();
     if(!readInGrid(argv[2], rows, cols)) {
+      cerr << "ERR1: failed to read in grid file";
       return 1; // ERR1: failed to read in grid file
     }
-    
+    if((rows - cols) > 0) {
+      maxLength = rows;
+    }else{
+      maxLength = cols;
+    }
+    // length is innermost loop
+    // next innermost loop is direction
+    // next innermost loop is startRow
+    // outermost loop is startCol
+    for(int startCol = 0; startCol < cols; startCol++) {
+      for(int startRow = 0; startRow < rows; startRow++) {
+	for(int dir = 0; dir < 8; dir++) {
+	  string dirS = "";
+	  switch(dir) {
+	  case 0:
+	    dirS = "N ";
+	    break;
+	  case 1:
+	    dirS = "NE";
+	    break;
+	  case 2:
+	    dirS = "E ";
+	    break;
+	  case 3:
+	    dirS = "SE";
+	    break;
+	  case 4:
+	    dirS = "S ";
+	    break;
+	  case 5:
+	    dirS = "SW";
+	    break;
+	  case 6:
+	    dirS = "W ";
+	    break;
+	  case 7:
+	    dirS = "NW";
+	    break;
+	    
+	  for(int length = 1; length < maxLength; length++) {
+	    string word = getWordInGrid(startRow, startCol, dir,
+					length, rows, cols);
+	    if(dictSet.find(word) != dictSet.end()) {
+		 cout << dirS << "(" << startRow << ", " << startCol <<
+		   "):       " << word;
+	    }
+	  }
+	  }
+	}
+      }
+    }
   }
 }
 
