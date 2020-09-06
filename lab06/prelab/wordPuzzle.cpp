@@ -71,20 +71,23 @@ int main(int argc, char *argv[]) {
 	  case 7:
 	    dirS = "NW";
 	    break;
-	    
-	  for(int length = 1; length < maxLength; length++) {
+	  }
+	  for(int length = 3; length < maxLength; length++) {
 	    string word = getWordInGrid(startRow, startCol, dir,
 					length, rows, cols);
-	    if(dictSet.find(word) != dictSet.end()) {
-		 cout << dirS << "(" << startRow << ", " << startCol <<
-		   "):       " << word;
+	    if(dictSet.find(word) != dictSet.end() && word.size() > 2) {
+	      if(word.size() == length) {
+		cout << dirS << "(" << startRow << ", " << startCol <<
+		"):       " << word << endl;
+	      }
+	      
 	    }
-	  }
 	  }
 	}
       }
     }
   }
+  return 0;
 }
 
 /** This function will read in a grid file, as per the format in the
