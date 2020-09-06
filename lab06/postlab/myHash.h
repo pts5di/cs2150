@@ -21,7 +21,7 @@ class MyHashSet {
   float load_factor;
   int bcount;
 
-  int hash(string input);
+  unsigned long hash(string input);
   void rehash();
   string * buckets;
 };

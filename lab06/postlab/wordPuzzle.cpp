@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 	    if(dictSet.contains(word) && word.size() > 2) {
 	      if(word.size() == length) {
 		cout << dirS << "(" << startRow << ", " << startCol <<
-		"):       " << word << endl;
+		"):       " << word << "\n";
 	      }
 	      
 	    }

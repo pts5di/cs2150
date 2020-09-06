@@ -10,11 +10,13 @@ MyHashSet::~MyHashSet() {
   delete[] buckets;
 }
 
-int MyHashSet::hash(string input) {
-  int result = 0;
+unsigned long MyHashSet::hash(string input) {
+  unsigned long result = 0;
+  int e = 1;
   int realMin = min((unsigned long)(10), input.size());
   for(int i = 0; i < realMin; i++) {
-    result += (int)(input[i]);
+    result += ((int)(input[i]))*e;
+    e *= 37;
   }
   return result;
 }
