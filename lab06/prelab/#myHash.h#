@@ -1,0 +1,24 @@
+#ifndef MYHASH_H
+#define MYHASH_H
+#include <iostream>
+using 
+
+class MyHashSet() {
+  
+ public:
+  MyHashSet();
+  ~MyHashSet();
+  void insert(string input);
+  bool contains(string input);
+  void remove(string input);
+
+ private:
+  int table_size;
+  float load_factor;
+  string[] * buckets;
+  int bcount;
+
+  int hash(string input);
+  void rehash();
+};
+#endif

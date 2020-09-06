@@ -1,0 +1,17 @@
+#include <iostream>
+#include <fstream>
+#include <unordered_set>
+
+int main(int argc, char *argv[]) {
+  std::string line;
+  std::unordered_set<string> dictSet;
+  if(argc == 3) {
+    fstream dictfile(argv[1]);
+    if(dictfile.is_open()) {
+      while(getline(dictfile, line)) {
+	dictSet.insert(line);
+      }
+    }
+    dictfile.close();
+  }
+}
