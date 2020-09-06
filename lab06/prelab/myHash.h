@@ -2,10 +2,16 @@
 #define MYHASH_H
 #include <iostream>
 
-class MyHashSet() {
+using namespace std;
+
+bool checkprime(unsigned int p);
+int getNextPrime(unsigned int n);
+
+class MyHashSet {
   
  public:
   MyHashSet();
+  ~MyHashSet();
   void insert(string input);
   bool contains(string input);
   void remove(string input);
@@ -13,8 +19,10 @@ class MyHashSet() {
  private:
   int table_size;
   float load_factor;
+  int bcount;
 
   int hash(string input);
   void rehash();
+  string * buckets;
 };
 #endif

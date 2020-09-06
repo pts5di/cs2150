@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <unordered_set>
+#include "myHash.h"
 using namespace std;
 
 // We create a 2-D array of some big size, and assume that the grid
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   int rows;
   int cols;
   int maxLength;
-  unordered_set<string> dictSet;
+  MyHashSet dictSet;
   if(argc == 3) {
     fstream dictFile(argv[1]);
     if(dictFile.is_open()) {
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 	  for(int length = 3; length < maxLength; length++) {
 	    string word = getWordInGrid(startRow, startCol, dir,
 					length, rows, cols);
-	    if(dictSet.find(word) != dictSet.end() && word.size() > 2) {
+	    if(dictSet.contains(word) && word.size() > 2) {
 	      if(word.size() == length) {
 		cout << dirS << "(" << startRow << ", " << startCol <<
 		"):       " << word << endl;
