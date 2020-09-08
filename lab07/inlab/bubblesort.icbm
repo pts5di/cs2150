@@ -1,0 +1,34 @@
+C014 000 jmp	jump	jump to start
+0000 001 dw 	array[0]
+0000 002 dw	array[1]
+0000 003 dw 	array[2]
+0000 004 dw	array[3]
+0000 005 dw 	array[4]
+0000 006 dw	array[5]
+0000 007 dw 	array[6]
+0000 008 dw 	array[7]
+0000 009 dw 	array[8]
+0000 00A dw	array[9]
+000A 00B dw	ten
+0000 00C dw 	0
+0001 00D dw	one
+0000 00E dw	i
+B000 00F nop
+3000 010 load	loadit
+4000 011 store	storeit
+B000 012 nop
+B000 013 nop
+3011 014 load	start	storeit
+500E 015 add		i
+5001 016 add 		array
+4019 017 store		store storeit
+1000 018 readH		read input
+0000 019 dw		storeit
+300E 01A load 		i
+500D 01B add		one
+400E 01C store		i
+600B 01D sub		ten
+D020 01E jmpe
+C014 01F jump		start
+
+
