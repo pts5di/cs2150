@@ -16,8 +16,8 @@ C014 000 jmp	jump	jump to start
 0001 00F dw	arr*
 3000 010 load	loadit
 4000 011 store	storeit
-B000 012 nop
-B000 013 nop
+0000 012 dw	j
+6000 013 dw 	subit
 3011 014 load	start	storeit
 500E 015 add		i
 500F 016 add 		arr*
@@ -30,3 +30,70 @@ B000 013 nop
 600B 01D sub		ten
 D020 01E jmpe
 C014 01F jump		start
+300C 020 load 		zero
+400E 021 store		i
+C025 022 jump		next loop
+0000 023 dw 		temp_var
+B000 024 nop
+300B 025 load		10
+600E 026 sub		i
+D054 027 jmpe
+300B 028 load		10
+600D 029 sub		1
+4012 02A store		j
+3012 02B load 		j
+600E 02C sub 		i
+D050 02D jmpe
+3010 02E load		loadit
+5012 02F add		j
+500F 030 add		arr*
+4037 031 store		loadit
+3013 032 load		subit
+5012 033 add 		j
+600D 034 sub		one
+500F 035 add		arr*
+4038 036 store		sub j-1
+0000 037 doit		load j
+0000 038 doit		sub j-1
+E03B 039 jmpl		undesired order
+C04C 03A jump		desired order
+3010 03B load		loadit
+5012 03C add 		j
+500F 03D add		arr*
+4046 03E store		(load arr[j])
+600D 03F sub		1
+4048 040 store		(load arr[j-1])
+6010 041 sub		loadit
+5011 042 add		storeit
+404B 043 store		(store arr[j-1])
+500D 044 add		one
+4049 045 store 		(store arr[j])
+0000 046 load arr j
+4023 047 store to temp
+0000 048 load arr j - 1
+0000 049 store to arr j
+3023 04A load temp
+0000 04B store to arr j-1
+3012 04C load j
+600D 04D sub 1
+4012 04E store j
+C02B 04F jump to inner loop
+300E 050 load i
+500D 051 add 1
+400E 052 store i
+C025 053 jump to outer loop
+300C 054 load 0
+400E 055 store i
+300E 056 load i
+600B 057 sub 10
+D063 058 jump out
+3010 059 load loadit
+500E 05A add i
+500F 05B add arr*
+405D 05C store load arr[i]
+0000 05D doit
+1800 05E print
+300E 05F load i
+500D 060 add one
+400E 061 store i
+C056 062 jump to start of loop
