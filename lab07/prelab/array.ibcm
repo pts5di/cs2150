@@ -1,0 +1,54 @@
+C00B 000
+0000 001 
+0000 002 c	dw	0	how many elements added	
+0000 003 s	dw	0	size of array	
+0036 004 arr*	dw	0	pointer to array start
+3000 005 loadCmd
+0000 006 i	dw	0	iterator int
+4000 007 storeCmd
+0001 008 one	dw	1	 
+0000 009 zero 	dw 	0
+B000 00A
+1000 00B start	readH		read array size	
+4003 00C 	store s		store array size		
+3004 00D i loop	load arr*		
+5007 00E	add storeCmd		
+5006 00F	add i
+4012 010	store store_it
+1000 011	readH
+0000 012	store_it
+3006 013	load i 
+5008 014	add 1
+4006 015	store i
+6003 016	sub s
+D019 017	jmpl 019
+C00D 018	jump i loop
+3009 019	load 0
+4006 01A	store i
+3005 01B loop2	load loadCmd
+5004 01C	add arr*
+5006 01D	add i
+401F 01E	store load_it
+0000 01F	load_it
+1800 020	printH
+3006 021	load i
+5008 022	add one
+4006 023	store i
+6003 024	sub s
+D027 025	jmpe
+C01B 026	jump loop2
+3006 027 	load i
+6008 028	subtract 1
+4006 029 	store i
+3005 02A loop3	load loadCmd
+5004 02B 	add arr*
+5006 02C	add i
+402E 02D	store load_it
+0000 02E	load_it
+1800 02F	printH
+3006 030	load i
+6008 031	sub 1
+4006 032 	store i
+E035 033 	jmpe
+C02A 034	jump loop3
+0000 035	halt
