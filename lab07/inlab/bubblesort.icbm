@@ -13,14 +13,14 @@ C014 000 jmp	jump	jump to start
 0000 00C dw 	0
 0001 00D dw	one
 0000 00E dw	i
-B000 00F nop
+0001 00F dw	arr*
 3000 010 load	loadit
 4000 011 store	storeit
 B000 012 nop
 B000 013 nop
 3011 014 load	start	storeit
 500E 015 add		i
-5001 016 add 		array
+500F 016 add 		arr*
 4019 017 store		store storeit
 1000 018 readH		read input
 0000 019 dw		storeit
@@ -30,5 +30,3 @@ B000 013 nop
 600B 01D sub		ten
 D020 01E jmpe
 C014 01F jump		start
-
-
