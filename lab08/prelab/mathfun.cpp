@@ -4,7 +4,15 @@
 using namespace std;
 
 extern "C" long product (long, long);
+extern "C" long power (long, long);
 
 int main() {
-  cout << product(3,4);
+  int x;
+  int y;
+  cout << "Enter the first parameter: ";
+  cin >> x;
+  cout << "Enter the second parameter: ";
+  cin >> y;
+  cout << product(x,y) << "\n";
+  cout << power(x,y) << "\n";
 }
