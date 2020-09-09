@@ -1,0 +1,19 @@
+C006 000 jump to start
+0000 001 i
+0001 002 one
+3000 003 loadit
+4000 004 storeit
+0012 005 program size
+3005 006 load size
+E000 007 jmpl
+3003 008 load loadit
+5001 009 add i
+400B 00A store 0B
+0000 00B doit
+1800 00C printH
+3001 00D load i
+5002 00E add one
+4001 00F store i
+3006 010 load program size
+6002 011 sub one
+C007 012 jump back
