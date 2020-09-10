@@ -3,8 +3,8 @@
 ; Spring 2018
 ; mergeSort.s	
 
-	global mergeSort
-	global merge
+	global _mergeSort
+	global _merge
 
 	section .text
 
@@ -13,19 +13,69 @@
 ; Parameter 2 is the left index in the array 
 ; Parameter 3 is the right index in the array
 ; Return type is void 
-mergeSort:
-
-	; Implement mergeSort here
-	
-
-
+_mergeSort:
+	cmp 	rdx, rsi	;if array size is 1,  //rsi=L,rdx=R
+	je	donezo		;jump to merge call
+	push	rsi		;push left index
+	push 	rdx		;push right index
+	add	rdx, rsi	;combine left/right index //rdx=L+R
+	mov 	rax, rdx	;store combined index in rax //rax=L+R
+	xor	rdx, rdx	;empties rdx //rdx = 0
+	push 	r9		
+	mov 	r9, 2		;stores 2 in r9 // r9 = 2
+	idiv	r9		;divides (RDX:RAX) by 2 // rax=(L+R)/2
+	pop 	r9
+	mov	rdx, rax	;stores result of division(midpoint) in rdx // rdx = (L+R)/2
+	mov	rcx, rdx	;stores midpoint //rcx=(L+R)/2
+	push	rcx
+	push	rdx
+	push	rsi
+	push	rax
+	call	_mergeSort	;calls mergeSort recursively
+	pop	rax
+	pop	rsi
+	pop	rdx
+	pop	rcx
+	add	rdx, 1		;adds 1 to midpoint
+	mov	rsi, rdx	;moves midpoint+1 to left index
+	pop	rdx		;restores original right endpoint
+	push	rcx		
+	push 	rdx		;stores original right endpoint
+	push	rsi
+	push	rax
+	call	_mergeSort	;calls mergeSort recursively
+	pop	rax
+	pop	rsi
+	pop	rdx
+	pop	rcx
+	pop 	rsi		
+	push 	rdx		;swap rdx and rcx
+	push 	rcx
+	pop	rdx
+	pop 	rcx
+remerge:	
+	push 	r10
+	push 	r11
+	push	rsi
+	push 	rdx
+	push	rcx
+	push 	rax
+	call 	_merge
+	pop 	rax
+	pop	rcx
+	pop	rdx
+	pop	rsi
+	pop 	r11
+	pop 	r10
+donezo:	
+	ret
 
 ; Parameter 1 is a pointer to the int array 
 ; Parameter 2 is the left index in the array
 ; Parameter 3 is the middle index in the array 
 ; Parameter 4 is the right index in the array
 ; Return type is void 
-merge:
+_merge:
 	; Save callee-save registers
 	; Store local variables 
 	push rbx			; int i
