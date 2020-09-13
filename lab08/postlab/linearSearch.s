@@ -15,7 +15,6 @@ loop:
 	cmp	rsi, r8		;compare rsi to count
 	je	donezobad	;if size-(count) = 0, we have iterated through
 	pop	rsi		;original value of rsi
-	mov	r10d, [r9]
 	cmp	edx, [r9]	;compare target value(rdx) to r9(arr ptr)
 	je	donezo		;if equal, exit
 	add	r9, 4		;increment r9(arr ptr) by 4(size of int)
