@@ -29,7 +29,23 @@ int main(int argc, char** argv) {
     vector<string> dests = me.getItinerary(cities_to_visit);
 
     // TODO: YOUR CODE HERE
-    
+    vector<string>::iterator eraser = dests.begin();
+    string startCity = *eraser;
+    dests.erase(eraser);
+    sort(dests.begin(), dests.end());
+    vector<string> bestPath = vector<string>(dests);
+    float bestPathLength = computeDistance(me, startCity, dests);
+    do {
+      float currentPathLength = computeDistance(me, startCity, dests);
+      if(currentPathLength < bestPathLength) {
+	bestPathLength = currentPathLength;
+	bestPath = vector<string>(dests);
+      }
+    } while(next_permutation(dests.begin(), dests.end()));
+
+    cout << "Minimum path has distance of " << bestPathLength << ": ";
+    printRoute(startCity, bestPath);
+    cout << endl;
     return 0;
 }
 
@@ -62,8 +78,8 @@ void printRoute(const string& start, const vector<string>& dests) {
     // TODO: YOUR CODE HERE
   cout << start;
   
-  for(vector<string>::iterator vsit = dests.begin(); vsit != dests.end(); vsit++) {
+  for(vector<const string>::iterator vsit = dests.begin(); vsit != dests.end(); vsit++) {
     cout << " -> " << *vsit;
   }
-  cout << " -> " << start;
+  cout << " -> " << start << endl;
 }
