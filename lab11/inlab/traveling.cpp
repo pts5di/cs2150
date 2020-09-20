@@ -29,6 +29,7 @@ int main(int argc, char** argv) {
     vector<string> dests = me.getItinerary(cities_to_visit);
 
     // TODO: YOUR CODE HERE
+    
     return 0;
 }
 
@@ -38,7 +39,7 @@ int main(int argc, char** argv) {
 float computeDistance(MiddleEarth me, const string& start, vector<string> dests) {
     // TODO: YOUR CODE HERE
   vector<string>::iterator vsit = dests.begin();
-  float totalDist = me.getDistance(start, vsit);
+  float totalDist = me.getDistance(start, *vsit);
   
   for(vsit = dests.begin(); vsit != dests.end(); vsit++) {
     vector<string>::iterator vsit2 = vsit+1;
@@ -48,9 +49,9 @@ float computeDistance(MiddleEarth me, const string& start, vector<string> dests)
     }else{
       vsit2string = start;
     }
-    totalDist = totalDist + me.getDistance(*vsit, vsit2string);
+    totalDist +=  me.getDistance(*vsit, vsit2string);
   }
-  return 0;
+  return totalDist;
 }
 
 // This method will print the entire route, starting and ending at the
