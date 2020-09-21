@@ -2,12 +2,12 @@
 
 @implementation ListNode : NSObject
 
-- (id) setData : (int) newValue {
+- (id) setValue : (int) newValue {
   data = newValue;
   return self;
 }
 
-- (int) data {
+- (int) value {
   return self->data;
 }
 
@@ -17,7 +17,7 @@
 }
 
 - (ListNode*) next {
-  return self;
+  return self->next;
 }
 
 @end
